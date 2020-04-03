@@ -81,8 +81,13 @@ class Matrix {
         return result;
     }
 
+    /**
+     * Multiplies two matricies together
+     * @param mainMatrix the first matrix
+     * @param otherMatrix the second matrix
+     * @return A new matrix that represents the product of the first and second matrices
+     */
     public static Matrix multiply(Matrix mainMatrix, Matrix otherMatrix){
-        LinkedList<Double> pp = new LinkedList<>();
         int commonDimension = mainMatrix.columnVectors.size();
         if(commonDimension == otherMatrix.getNumRows()){
             LinkedList<Vector> protoMatrix = new LinkedList<>();

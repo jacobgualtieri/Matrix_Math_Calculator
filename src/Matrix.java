@@ -8,20 +8,28 @@ class Matrix {
         this.columnVectors = vectorList;
     }
 
+    /**
+     * Retrieve the column vector at the specified index from the list of column vectors
+     * @param columnIndex The index at which to look for the vector
+     * @return A specific vector from the columnVectors List;
+     */
     public Vector getColumnVector(int columnIndex){
         return columnVectors.get(columnIndex);
     }
 
+    /**
+     * Get the number of rows within this matrix
+     * @return The length of the array of coordinates within a vector object within this matrix
+     */
     public int getNumRows(){
         return columnVectors.get(0).getcomponentsList().length;
     }
 
-    public void scaleBy(double scaleFactor){
-        for(int i = 0; i < columnVectors.size(); i++){
-            columnVectors.get(i).scaleBy(scaleFactor);
-        }
-    }
-
+    /**
+     * Retrieve the row vector at the specified index from the list of column vectors
+     * @param rowIndex The index at which to look for the vector
+     * @return A new vector created from the coordinates at rowIndex from each column vector;
+     */
     public Vector getRowVector(int rowIndex){
         double[] numArray = new double[columnVectors.size()];
         for (int i = 0; i < columnVectors.size(); i++){
@@ -30,8 +38,28 @@ class Matrix {
         return new Vector(numArray);
     }
 
+    /**
+     * Multiply each value within the matrix by the scaleFactor
+     * @param scaleFactor The number by which each number in the matrix would be multiplied
+     */
+    public void scaleBy(double scaleFactor){
+        for (Vector columnVector : columnVectors) {
+            columnVector.scaleBy(scaleFactor);
+        }
+    }
+
+    /**
+     * Determine if this matrix is square
+     * @return boolean - number of rows == number of columns
+     */
     public boolean isSquareMatrix(){
         return this.columnVectors.size() == this.getNumRows();
+    }
+
+    public void addMatrix(Matrix m){
+        for (int i = 0; i < this.columnVectors.size(); i++){
+            this.getColumnVector(i).addVector(m.getColumnVector(i));
+        }
     }
 
     public double determinant(){
@@ -82,8 +110,8 @@ class Matrix {
     public String toString(){
         String result = "[  ";
         for (int rowNum = 0; rowNum < this.getNumRows(); rowNum++){
-            for(int i = 0; i < columnVectors.size(); i++){
-                result += columnVectors.get(i).getComponent(rowNum) + "  ";
+            for(Vector columnVector : columnVectors){
+                result += columnVector.getComponent(rowNum) + "  ";
             }
             if(rowNum == this.getNumRows()-1){
                 result += "]";
@@ -103,13 +131,20 @@ class Matrix {
         double[] testArray3 = {20,-5};
         double[] testArray4 = {-7,6};
 
-        Matrix matrix1 = new Matrix(new LinkedList(List.of(
+        double[] testArray5 = {4,2,0};
+        double[] testArray6 = {3,1,-1};
+
+        Matrix matrix1 = new Matrix(new LinkedList<>(List.of(
                 new Vector(testArray1),
                 new Vector(testArray2))));
 
-        Matrix matrix2 = new Matrix(new LinkedList(List.of(
+        Matrix matrix2 = new Matrix(new LinkedList<>(List.of(
                 new Vector(testArray3),
                 new Vector(testArray4))));
+
+        Matrix matrix3 = new Matrix(new LinkedList<>(List.of(
+                new Vector(testArray5),
+                new Vector(testArray6))));
 
         System.out.println(matrix1.toString()+"\n");
         System.out.println(matrix2.toString());
@@ -117,5 +152,8 @@ class Matrix {
         System.out.println(det_matrix_2);
         // Matrix multMatrix = multiply(matrix1, matrix2);
         // System.out.println(multMatrix.toString());
+
+        matrix1.addMatrix(matrix3);
+        System.out.println(matrix1);
     }
 }

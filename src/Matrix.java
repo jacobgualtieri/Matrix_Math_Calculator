@@ -22,7 +22,7 @@ class Matrix {
      * @return The length of the array of coordinates within a vector object within this matrix
      */
     public int getNumRows(){
-        return columnVectors.get(0).getcomponentsList().length;
+        return columnVectors.get(0).getComponentsList().length;
     }
 
     /**
@@ -88,8 +88,8 @@ class Matrix {
                 double[] resultArray = new double[mainMatrix.getNumRows()];
                 for (int j = 0; j < mainMatrix.getNumRows(); j++){
                     double sum = 0;
-                    for (int k = 0; k < otherMatrix.columnVectors.get(i).getcomponentsList().length; k++){
-                        for (int l = 0; l < mainMatrix.columnVectors.get(j).getcomponentsList().length; l++){
+                    for (int k = 0; k < otherMatrix.columnVectors.get(i).getComponentsList().length; k++){
+                        for (int l = 0; l < mainMatrix.columnVectors.get(j).getComponentsList().length; l++){
                             sum += mainMatrix.columnVectors.get(j).getComponent(l)*otherMatrix.columnVectors.get(i).getComponent(k);
                         }
                     }

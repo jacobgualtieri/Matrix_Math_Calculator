@@ -16,7 +16,7 @@ public class Vector{
      * Get the list of opponents held by this vector object
      * @return the component list
      */
-    public double[] getcomponentsList() {
+    public double[] getComponentsList() {
         return componentsList;
     }
 
@@ -70,15 +70,15 @@ public class Vector{
      */
     public double getMagnitude(){
         double radicand = 0;
-        for(int i = 0; i < componentsList.length; i++){
-            radicand += Math.pow(componentsList[i], 2);
+        for (double v : componentsList) {
+            radicand += Math.pow(v, 2);
         }
         return Math.sqrt(radicand);
     }
 
     /**
+     * Multiply each component of this vector by the scaleFactor
      * @param scaleFactor The scalar value by which the vector being referenced will be multiplied.
-     * @return
      */
     public void scaleBy(double scaleFactor){
         for(int i = 0; i < componentsList.length; i++){
@@ -87,7 +87,7 @@ public class Vector{
     }
 
     public static Vector scalarProduct(Vector v, double scaleFactor){
-        double[] newComponentList = new double[v.getcomponentsList().length];
+        double[] newComponentList = new double[v.getComponentsList().length];
         for(int i = 0; i < v.componentsList.length; i++){
             newComponentList[i] = scaleFactor*v.componentsList[i];
         }
@@ -138,15 +138,15 @@ public class Vector{
 
     @Override
     public String toString() {
-        String resultStr = "<";
+        StringBuilder resultStr = new StringBuilder("<");
         for(int i = 0; i < componentsList.length; i++){
             if (i < componentsList.length-1){
-                resultStr += this.componentsList[i] + ", ";
+                resultStr.append(this.componentsList[i]).append(", ");
             }
             else {
-                resultStr += this.componentsList[i] + ">";
+                resultStr.append(this.componentsList[i]).append(">");
             }
         }
-        return resultStr;
+        return resultStr.toString();
     }
 }

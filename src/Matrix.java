@@ -82,23 +82,18 @@ class Matrix {
     }
 
     public static Matrix multiply(Matrix mainMatrix, Matrix otherMatrix){
-        if(mainMatrix.columnVectors.size() == otherMatrix.getNumRows()){
-            LinkedList<Vector> newVectorList = new LinkedList<>();
-            for (int i = 0; i < otherMatrix.columnVectors.size(); i++){
-                double[] resultArray = new double[mainMatrix.getNumRows()];
-                for (int j = 0; j < mainMatrix.getNumRows(); j++){
-                    double sum = 0;
-                    for (int k = 0; k < otherMatrix.columnVectors.get(i).getComponentsList().length; k++){
-                        for (int l = 0; l < mainMatrix.columnVectors.get(j).getComponentsList().length; l++){
-                            sum += mainMatrix.columnVectors.get(j).getComponent(l)*otherMatrix.columnVectors.get(i).getComponent(k);
-                        }
-                    }
-                    resultArray[j] = sum;
+        LinkedList<Double> pp = new LinkedList<>();
+        int commonDimension = mainMatrix.columnVectors.size();
+        if(commonDimension == otherMatrix.getNumRows()){
+            LinkedList<Vector> protoMatrix = new LinkedList<>();
+            for(int i = 0; i < otherMatrix.columnVectors.size(); i++){
+                double[] intermediateArray = new double[mainMatrix.getNumRows()];
+                for(int j = 0; j < mainMatrix.getNumRows(); j++){
+                    intermediateArray[j] = otherMatrix.getColumnVector(i).dotProduct(mainMatrix.getRowVector(j));
                 }
-                System.out.println(new Vector(resultArray).toString());
-                newVectorList.add(new Vector(resultArray));
+                protoMatrix.add(new Vector(intermediateArray));
             }
-            return new Matrix(newVectorList);
+            return new Matrix(protoMatrix);
         }
         else{
             System.out.println("ERROR: Invalid matrix size");
@@ -128,8 +123,8 @@ class Matrix {
         double[] testArray1 = {1,3,5};
         double[] testArray2 = {2,4,6};
 
-        double[] testArray3 = {20,-5};
-        double[] testArray4 = {-7,6};
+        double[] testArray3 = {0,1};
+        double[] testArray4 = {1,0};
 
         double[] testArray5 = {4,2,0};
         double[] testArray6 = {3,1,-1};
@@ -150,8 +145,10 @@ class Matrix {
         System.out.println(matrix2.toString());
         double det_matrix_2 = matrix2.determinant();
         System.out.println(det_matrix_2);
-        // Matrix multMatrix = multiply(matrix1, matrix2);
-        // System.out.println(multMatrix.toString());
+        System.out.println("\nMultiply Test:");
+        Matrix multMatrix = multiply(matrix1, matrix2);
+        System.out.println(multMatrix.toString());
+        System.out.println();
 
         matrix1.addMatrix(matrix3);
         System.out.println(matrix1);
